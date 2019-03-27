@@ -1,0 +1,18 @@
+.StartScreen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.StartScreen h1 {
+    color: #c5c5c5;
+}
+
+.StartScreen svg {
+    height: 10rem;
+    width: 10rem;
+    fill: #c5c5c5;
+    margin-top: 2rem;
+}
