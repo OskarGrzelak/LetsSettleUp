@@ -1,6 +1,7 @@
 import React from 'react';
 import ExpensesHeader from './ExpensesHeader/ExpensesHeader';
 import Expense from './Expense/Expense';
+import classes from './Expenses.module.css';
 
 const expenses = (props) => {
 
@@ -9,7 +10,7 @@ const expenses = (props) => {
     );
 
     return (
-        <table>
+        <table className={classes.Expenses}>
             <thead>
                 <ExpensesHeader />
             </thead>

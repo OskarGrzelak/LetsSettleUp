@@ -1,0 +1,11 @@
+.Expense {
+    width: 100%;
+}
+
+.Expense input[type="text"] {
+    width: 30%;
+}
+
+.Expense input[type="number"] {
+    width: 20%;
+}
