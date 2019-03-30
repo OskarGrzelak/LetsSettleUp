@@ -6,7 +6,13 @@ import classes from './Expenses.module.css';
 const expenses = (props) => {
 
     let expensesList = props.expenses.map(expense => 
-        <Expense key={expense.id} id={expense.id} name={expense.name} cost={expense.cost} updateName={props.updateName} updateCost={props.updateCost} />
+        <Expense 
+            key={expense.id} 
+            id={expense.id} 
+            name={expense.name} 
+            cost={expense.cost} 
+            updateName={props.updateName} 
+            updateCost={props.updateCost} />
     );
 
     return (

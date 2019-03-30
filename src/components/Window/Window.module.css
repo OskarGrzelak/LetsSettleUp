@@ -7,6 +7,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    transition: all 1s;
 }
 
 .Window h2 {
@@ -41,27 +43,4 @@
 
 .Window button:not(:last-child) {
     margin-bottom: 1rem;
-}
-
-.hidden {
-    opacity: 0;
-}
-
-.moveIn {
-    animation: move-in 1s ease-in-out;
-}
-
-.moveOut {
-    animation: move-out 1s ease-in-out;
-}
-
-@keyframes move-in {
-    0% { transform: translateY(-100%); opacity: 0; }
-    80% { transform: translateY(5%); }
-    100% { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes move-out {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(100%); opacity: 0; }
 }

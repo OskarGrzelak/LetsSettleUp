@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Screen from './containers/Screen/Screen';
 import Layout from './containers/Layout/Layout';
 import StartScreen from './components/StartScreen/StartScreen';
 import Window from './components/Window/Window';
@@ -6,6 +7,7 @@ import Window from './components/Window/Window';
 class App extends Component {
 
   state = {
+    positionY: 0,
     windows: ['start', 'title', 'names', 'expenses', 'detailedExpenses'],
     index: 0,
     title: '',
@@ -16,17 +18,13 @@ class App extends Component {
   }
 
   nextButtonHandler = () => {
-    const index = this.state.index;
-    const updatedIndex = index + 1;
-    this.setState({ index: updatedIndex });
-    console.log(this.state);
+    const position = this.state.positionY-100;
+    this.setState({positionY: position});
   }
 
   backButtonHandler = () => {
-    const index = this.state.index;
-    const updatedIndex = index - 1;
-    this.setState({ index: updatedIndex });
-    console.log(this.state);
+    const position = this.state.positionY+100;
+    this.setState({positionY: position});
   }
 
   updateTitleHandler = (e) => {
@@ -64,31 +62,39 @@ class App extends Component {
 
   render() {
 
-    let currWindow = this.state.windows[this.state.index];
-    console.log(currWindow);
-    let windowToDisplay = null;
-    if(currWindow === 'start') {
-      windowToDisplay = <StartScreen next={this.nextButtonHandler} />
-    } else {
-      windowToDisplay = <Window 
-                          type={currWindow} 
-                          next={this.nextButtonHandler} 
-                          back={this.backButtonHandler} 
-                          nextExpense={this.addExpenseHandler} 
-                          expenses={this.state.expenses} 
-                          title={this.state.title} 
-                          names={this.state.names} 
-                          updateTitle={this.updateTitleHandler} 
-                          updateNames={this.updateNamesHandler} 
-                          updateName={this.updateNameHandler} 
-                          updateCost={this.updateCostHandler} />;
-    }
     return (
-      <div>
-        <Layout>
-          {windowToDisplay}
+      
+      <Screen>
+        <Layout position={this.state.positionY}>
+          <StartScreen next={this.nextButtonHandler} />
+          <Window
+            type="title" 
+            title={this.state.title} 
+            updateTitle={this.updateTitleHandler} 
+            next={this.nextButtonHandler} 
+            back={this.backButtonHandler} />
+          <Window 
+            type="names"
+            names={this.state.names} 
+            updateNames={this.updateNamesHandler} 
+            next={this.nextButtonHandler} 
+            back={this.backButtonHandler} />
+          <Window 
+            type="expenses"
+            expenses={this.state.expenses} 
+            updateName={this.updateNameHandler}
+            updateCost={this.updateCostHandler}
+            nextExpense={this.addExpenseHandler}
+            next={this.nextButtonHandler} 
+            back={this.backButtonHandler} />
+          <Window 
+            type="detailedExpenses"
+            expenses={this.state.expenses}
+            next={this.nextButtonHandler} 
+            back={this.backButtonHandler} />      
         </Layout>
-      </div>
+      </Screen>
+        
     );
   }
 }

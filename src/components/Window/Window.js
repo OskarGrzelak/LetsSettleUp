@@ -1,9 +1,8 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import Expenses from '../Expenses/Expenses';
 import classes from './Window.module.css';
 
 const window = (props) => {
-    let style = [classes.Window, classes.moveIn];
 
     let title, body;
     switch(props.type) {
@@ -46,7 +45,7 @@ const window = (props) => {
     }
 
     return (
-        <div className={style.join(' ')}>
+        <div className={classes.Window}>
             {title}
             {body}
         </div>

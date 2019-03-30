@@ -1,14 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
+import {Motion, spring} from 'react-motion';
 import classes from './Layout.module.css';
 
-class Layout extends Component {
-    render() {
-        return (
-            <div className={classes.Container}>
-                {this.props.children}
-            </div>
-        )
-    }
+const layout = (props) => {
+    
+    return (
+            
+        <Motion style={{y: spring(props.position)}}> 
+            { style => (
+                    <div className={classes.Container} style={{transform: `translateY(${style.y}vh)`}}>
+                        {props.children}
+                    </div>
+            ) }
+        </Motion>
+    )
 }
 
-export default Layout;
+
+export default layout;
