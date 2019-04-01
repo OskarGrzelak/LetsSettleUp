@@ -25,7 +25,7 @@ const window = (props) => {
         case 'expenses':
             title = <h2>Type shared expenses</h2>;
             body = <Fragment>
-                <Expenses expenses={props.expenses} updateName={props.updateName} updateCost={props.updateCost} />
+                <Expenses names={props.names} expenses={props.expenses} updateName={props.updateName} updateCost={props.updateCost} clicked={props.clicked} />
                 <button onClick={props.nextExpense}>Next expense</button>
                 <button onClick={props.next}>Next step</button>
                 <button onClick={props.back}>Back</button>
@@ -34,7 +34,7 @@ const window = (props) => {
         case 'detailedExpenses':
             title = <h2>Detailed expenses</h2>;
             body = <Fragment>
-                <Expenses expenses={props.expenses} />
+                <Expenses names={props.names} expenses={props.expenses} />
                 <button /* onClick={} */>Calculate</button>
                 <button onClick={props.back}>Back</button>
             </Fragment>

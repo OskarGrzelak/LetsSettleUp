@@ -1,5 +1,5 @@
 .Window {
-    min-height: 100vh;
+    height: 100vh;
     width: 100%;
     background-color: #fff;
 
@@ -8,7 +8,7 @@
     justify-content: center;
     align-items: center;
 
-    transition: all 1s;
+    overflow: scroll;
 }
 
 .Window h2 {

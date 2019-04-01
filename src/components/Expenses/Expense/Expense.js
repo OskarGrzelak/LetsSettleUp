@@ -2,8 +2,12 @@ import React from 'react';
 import classes from './Expense.module.css';
 
 const expense = (props) => {
-
     let expenseRow = null;
+    if (props.names) {
+        expenseRow = props.names.map((name, index) => {
+            return <td key={name} onClick={() => props.clicked(props.id, index)}>{props.participation[index] ? 'YES' : 'NO'}</td>
+        })
+    }
 
     return (
         <tr className={classes.Expense}>
@@ -12,7 +16,7 @@ const expense = (props) => {
                     type="text" 
                     placeholder="Expense's name" 
                     onChange={(e) => props.updateName(props.id, e)} 
-                    value={props.name}>
+                    value={props.name || ''}>
                 </input>
             </td>
             <td>
@@ -20,7 +24,7 @@ const expense = (props) => {
                     type="number" 
                     placeholder="999" 
                     onChange={(e) => props.updateCost(props.id, e)} 
-                    value={props.cost}>
+                    value={props.cost || ''}>
                 </input>
             </td>
             {expenseRow}

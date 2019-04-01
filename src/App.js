@@ -13,7 +13,7 @@ class App extends Component {
     title: '',
     names: [],
     expenses: [
-      { id: 0, name: '', cost: '' }
+      { id: 0, name: '', cost: '', participation: [] }
     ]
   }
 
@@ -34,13 +34,19 @@ class App extends Component {
 
   updateNamesHandler = (e) => {
     const names = e.target.value.split(',').map(name => name.trim());
+    const expenses = [...this.state.expenses];
+    if (this.state.expenses[0].participation.length === 0) {
+      const participation = names.map(name => true);
+      expenses[0].participation = participation;
+    }
     this.setState({ names: names });
   }
 
   addExpenseHandler = () => {
+    const participation = this.state.names.map(name => true);
     const expenses = [...this.state.expenses];
     const newId = expenses[expenses.length-1].id + 1;
-    expenses.push({ id: newId, name: '', value: '' });
+    expenses.push({ id: newId, name: '', value: '', participation: participation });
     this.setState( { expenses: expenses });
   }
 
@@ -57,6 +63,13 @@ class App extends Component {
     let expenses = [...this.state.expenses];
     const index = expenses.findIndex(expense => expense.id === id);
     expenses[index].cost = cost;
+    this.setState({ expenses: expenses });
+  }
+
+  updateParticipation = (expenseId, personId) => {
+    let expenses = [...this.state.expenses];
+    const expenseIndex = expenses.findIndex(expense => expense.id === expenseId);
+    expenses[expenseIndex].participation[personId] = !this.state.expenses[expenseIndex].participation[personId];
     this.setState({ expenses: expenses });
   }
 
@@ -81,14 +94,17 @@ class App extends Component {
             back={this.backButtonHandler} />
           <Window 
             type="expenses"
+            names={this.state.names}
             expenses={this.state.expenses} 
             updateName={this.updateNameHandler}
             updateCost={this.updateCostHandler}
+            clicked={this.updateParticipation}
             nextExpense={this.addExpenseHandler}
             next={this.nextButtonHandler} 
             back={this.backButtonHandler} />
           <Window 
             type="detailedExpenses"
+            names={this.state.names}
             expenses={this.state.expenses}
             next={this.nextButtonHandler} 
             back={this.backButtonHandler} />      
