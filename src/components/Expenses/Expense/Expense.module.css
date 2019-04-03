@@ -1,15 +1,52 @@
 .Expense {
     width: 100%;
+    margin-bottom: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 4px;
 }
 
-.Expense td input {
+.Expense:nth-child(2n) {
+    background-color: #eee;
+}
+
+.Main,
+.Sub {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.Sub {
+    flex-wrap: wrap;
+}
+
+.Expense .Main input,
+.Expense .Sub input {
+    margin-bottom: 0;
+    padding: .2rem .5rem;
+    font-size: 1.2rem;
+}
+
+.Expense .Main input {
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+}
+
+.Expense .Sub div {
+    width: 30%;
     margin-bottom: .5rem;
 }
 
-.Expense input[type="text"] {
+.Expense .Sub label {
+    font-size: 1.4rem;
+    display: block;
+}
+
+/* .Expense input[type="text"] {
     width: 30%;
 }
 
 .Expense input[type="number"] {
     width: 20%;
-}
+} */

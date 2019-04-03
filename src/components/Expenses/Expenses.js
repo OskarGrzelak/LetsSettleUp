@@ -1,5 +1,4 @@
 import React from 'react';
-import ExpensesHeader from './ExpensesHeader/ExpensesHeader';
 import Expense from './Expense/Expense';
 import classes from './Expenses.module.css';
 
@@ -15,18 +14,13 @@ const expenses = (props) => {
             participation={expense.participation}
             updateName={props.updateName} 
             updateCost={props.updateCost}
-            clicked={props.clicked} />
+            updateParticipation={props.updateParticipation} />
     );
 
     return (
-        <table className={classes.Expenses}>
-            <thead>
-                <ExpensesHeader names={props.names} />
-            </thead>
-            <tbody>
-                {expensesList}
-            </tbody>
-        </table>
+        <div className={classes.Expenses}>
+            {expensesList}
+        </div>
     )
 }
 

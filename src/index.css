@@ -1,10 +1,14 @@
+* {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
 html {
   font-size: 62.5%; /* now 1rem = 10px */
 }
 
 body {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
   font-family: 'Josefin Sans', sans-serif;
   color: #3d3d3d;
