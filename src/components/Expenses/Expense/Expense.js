@@ -32,11 +32,14 @@ const expense = (props) => {
                     onChange={(e) => props.updateCost(props.id, e)} 
                     value={props.cost || ''}>
                 </input>
-                <span>&dArr;</span>
+                <span onClick={() => props.toggleExpense(props.id)}>&dArr;</span>
             </div>
-            <div className={classes.Sub}>
-                {expenseRow}
-            </div>
+            {props.show ? (
+                <div className={classes.Sub}>
+                    {expenseRow}
+                </div>
+            ) : null}
+            
         </div>
     )
 }

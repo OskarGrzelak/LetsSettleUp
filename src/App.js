@@ -16,7 +16,7 @@ class App extends Component {
     title: '',
     names: [],
     expenses: [
-      { id: 0, name: '', cost: '', participation: [] }
+      { id: 0, name: '', cost: '', participation: [], show: true }
     ]
   }
 
@@ -62,9 +62,17 @@ class App extends Component {
   addExpenseHandler = () => {
     const participation = this.state.names.map(name => '');
     const expenses = [...this.state.expenses];
+    expenses.forEach(expense => expense.show = false);
     const newId = expenses[expenses.length-1].id + 1;
-    expenses.push({ id: newId, name: '', value: '', participation: participation });
+    expenses.push({ id: newId, name: '', value: '', participation: participation, show: true });
     this.setState( { expenses: expenses });
+  }
+
+  toggleExpenseHandler = (id) => {
+    const expenses = [...this.state.expenses];
+    const index = expenses.findIndex(expense => expense.id === id);
+    expenses[index].show = !expenses[index].show;
+    this.setState( {expenses: expenses});
   }
 
   updateNameHandler = (id, e) => {
@@ -120,6 +128,7 @@ class App extends Component {
               updateName={this.updateNameHandler}
               updateCost={this.updateCostHandler}
               updateParticipation={this.updateParticipation}
+              toggleExpense={this.toggleExpenseHandler}
               nextExpense={this.addExpenseHandler}
               next={this.nextButtonHandler} 
               back={this.backButtonHandler} />

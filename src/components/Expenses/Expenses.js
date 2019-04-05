@@ -12,9 +12,11 @@ const expenses = (props) => {
             name={expense.name} 
             cost={expense.cost} 
             participation={expense.participation}
+            show={expense.show}
             updateName={props.updateName} 
             updateCost={props.updateCost}
-            updateParticipation={props.updateParticipation} />
+            updateParticipation={props.updateParticipation}
+            toggleExpense={props.toggleExpense} />
     );
 
     return (
