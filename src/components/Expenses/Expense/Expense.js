@@ -3,14 +3,14 @@ import classes from './Expense.module.css';
 
 const expense = (props) => {
     let expenseRow = null;
-    if (props.names) {
+    if (props.names.length>0) {
         expenseRow = props.names.map((name, index) => {
             return (
-                <div key={name}>
-                    <label>{name}</label>
+                <div key={name.name}>
+                    <label>{name.name}</label>
                     <input 
                         type="number" 
-                        value={props.participation[index]} 
+                        value={props.participation[name.index]} 
                         onChange={(e) => props.updateParticipation(props.id, index, e)} />
                 </div>
             )
