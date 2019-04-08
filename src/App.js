@@ -17,17 +17,35 @@ class App extends Component {
     names: [],
     expenses: [
       { id: 0, name: '', cost: '', participation: [], show: true }
-    ]
+    ],
+    readyToChange: true
+  }
+
+  checkInput = () => {
+    switch(this.state.index) {
+      case 0:
+        return true;
+      case 1:
+        return this.state.title !== '';
+      case 2:
+        return this.state.names.length > 0;
+    }
   }
 
   nextButtonHandler = () => {
     const position = this.state.positionY-100;
-    this.setState({positionY: position});
+    const index = this.state.index + 1;
+    if (this.checkInput()) {
+      this.setState({positionY: position, index: index, readyToChange: true})
+    } else {
+      this.setState({readyToChange: false});
+    };
   }
 
   backButtonHandler = () => {
     const position = this.state.positionY+100;
-    this.setState({positionY: position});
+    const index = this.state.index - 1;
+    this.setState({positionY: position, index: index});
   }
 
   updateTitleHandler = (e) => {
@@ -111,7 +129,8 @@ class App extends Component {
               title={this.state.title} 
               updateTitle={this.updateTitleHandler} 
               next={this.nextButtonHandler} 
-              back={this.backButtonHandler} />
+              back={this.backButtonHandler}
+              readyToChange={this.state.readyToChange} />
           </Window>
           <Window>
             <ParticipantsWindow
@@ -119,7 +138,8 @@ class App extends Component {
               updateNames={this.updateNamesHandler} 
               nameClicked={this.deleteNameHandler}
               next={this.nextButtonHandler} 
-              back={this.backButtonHandler} />
+              back={this.backButtonHandler}
+              readyToChange={this.state.readyToChange} />
           </Window>
           <Window>
             <ExpensesWindow

@@ -1,11 +1,15 @@
 import React, { Fragment } from 'react';
+import classes from '../Window.module.css';
 
 const participantsWindow = (props) => {
 
+    let style = null;
+    if (!props.readyToChange) style = {border: '2px solid red'};
+    
     let names = null;
     if (props.names) {
         names = props.names.map(name => {
-            return <div key={name.id} onClick={() => props.nameClicked(name.id)}>{name.name}</div>
+            return <div className={classes.Name} key={name.id} onClick={() => props.nameClicked(name.id)}>{name.name}</div>
         })
     }
 
@@ -16,7 +20,8 @@ const participantsWindow = (props) => {
                 type="text" 
                 placeholder="Huey,Dewey,Louie" 
                 onChange={props.updateNames} 
-                value={props.names.map(name => name.name).join(', ')} />
+                value={props.names.map(name => name.name).join(', ')}
+                style={style} />
             <button onClick={props.next}>Next step</button>
             <button onClick={props.back}>Back</button>
             {names}
