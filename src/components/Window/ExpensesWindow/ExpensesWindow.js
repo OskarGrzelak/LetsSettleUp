@@ -14,7 +14,7 @@ const expensesWindow = (props) => {
                 updateParticipation={props.updateParticipation}
                 toggleExpense={props.toggleExpense} />
             <button onClick={props.nextExpense}>Next expense</button>
-            <button>Calculate</button>
+            <button onClick={props.calculate}>Calculate</button>
             <button onClick={props.back}>Back</button>
         </Fragment>
     )

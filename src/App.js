@@ -16,7 +16,7 @@ class App extends Component {
     title: '',
     names: [],
     expenses: [
-      { id: 0, name: '', cost: '', participation: [], show: true }
+      { id: 0, name: '', cost: '', participation: [], show: true, perPerson: 0 }
     ],
     readyToChange: true
   }
@@ -57,7 +57,8 @@ class App extends Component {
     const names = e.target.value.split(',').map((name, index) => {
       return {
         id: index,
-        name: name.trim()
+        name: name.trim(),
+        debt: 0
       }
     });
     const expenses = [...this.state.expenses];
@@ -117,6 +118,56 @@ class App extends Component {
     this.setState({ expenses: expenses });
   }
 
+  calculateExpPerPerson = () => {
+    const expenses = [...this.state.expenses];
+    expenses.forEach(expense => {
+      const participants = expense.participation.filter(el => el >= 0);
+      expense.perPerson = expense.cost / participants.length;
+    });
+  }
+
+  calculatePersonsDebts = () => {
+    const names = [...this.state.names];
+    names.forEach((person, index) => {
+      person.debt = this.state.expenses.map(el => {
+        return el.participation[index] >= 0 ? el.perPerson - el.participation[index] : 0;
+      }).reduce((prev, cur) => prev + cur);
+    });
+  }
+
+  createDebtsList = () => {
+    const obligors = this.state.names.filter(name => name.debt > 0);
+    const obligees = this.state.names.filter(name => name.debt < 0);
+    const debts = [];
+    obligors.forEach(obligor => {
+      let i = 0;
+      while (obligor.debt > 0) {
+        if (obligor.debt <= -obligees[i].debt) {
+          debts.push({obligorName: obligor.name, obligeeName: obligees[i].name, debt: obligor.debt});
+          obligees[i].debt = obligees[i].debt + obligor.debt;
+          obligor.debt = 0;
+        } else {
+          debts.push({obligorName: obligor.name, obligeeName: obligees[i].name, debt: -obligees[i].debt});
+          obligor.debt = obligor.debt + obligees[i].debt;
+          obligees[i].debt = 0;
+        }
+        i++;
+      }
+    })
+
+    console.log(debts);
+  }
+
+  calculate = () => {
+    
+    this.calculateExpPerPerson();
+
+    this.calculatePersonsDebts();
+
+    this.createDebtsList();
+    
+  }
+
   render() {
 
     return (
@@ -151,7 +202,8 @@ class App extends Component {
               toggleExpense={this.toggleExpenseHandler}
               nextExpense={this.addExpenseHandler}
               next={this.nextButtonHandler} 
-              back={this.backButtonHandler} />
+              back={this.backButtonHandler}
+              calculate={this.calculate} />
           </Window>   
         </Layout>
       </Screen>
