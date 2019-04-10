@@ -141,7 +141,7 @@ class App extends Component {
     const debts = [];
     obligors.forEach(obligor => {
       let i = 0;
-      while (obligor.debt > 0) {
+      while (obligor.debt > 0 && i < obligees.length) {
         if (obligor.debt <= -obligees[i].debt) {
           debts.push({obligorName: obligor.name, obligeeName: obligees[i].name, debt: obligor.debt});
           obligees[i].debt = obligees[i].debt + obligor.debt;
@@ -154,8 +154,9 @@ class App extends Component {
         i++;
       }
     })
-
-    console.log(debts);
+    debts.forEach(debt => {
+      console.log(`${debt.obligorName} should give back ${debt.debt.toFixed(2)} to ${debt.obligeeName}`)
+    })
   }
 
   calculate = () => {
