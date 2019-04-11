@@ -6,19 +6,27 @@ import Window from './components/Window/Window';
 import TitleWindow from './components/Window/TitleWindow/TitleWindow';
 import ParticipantsWindow from './components/Window/ParticipantsWindow/ParticipantsWindow';
 import ExpensesWindow from './components/Window/ExpensesWindow/ExpensesWindow';
+import Debts from './components/Debts/Debts';
+
+
 
 class App extends Component {
 
-  state = {
-    positionY: 0,
-    windows: ['start', 'title', 'names', 'expenses'],
-    index: 0,
-    title: '',
-    names: [],
-    expenses: [
-      { id: 0, name: '', cost: '', participation: [], show: true, perPerson: 0 }
-    ],
-    readyToChange: true
+  state = this.initialState;
+
+  get initialState() {
+    return {
+      positionY: 0,
+        windows: ['start', 'title', 'names', 'expenses', 'debts'],
+        index: 0,
+        title: '',
+        names: [],
+        expenses: [
+          { id: 0, name: '', cost: '', participation: [], show: true, perPerson: 0 }
+        ],
+        readyToChange: true,
+        debts: []
+      }
   }
 
   checkInput = () => {
@@ -29,6 +37,8 @@ class App extends Component {
         return this.state.title !== '';
       case 2:
         return this.state.names.length > 0;
+      case 3:
+        return true;
     }
   }
 
@@ -153,10 +163,8 @@ class App extends Component {
         }
         i++;
       }
-    })
-    debts.forEach(debt => {
-      console.log(`${debt.obligorName} should give back ${debt.debt.toFixed(2)} to ${debt.obligeeName}`)
-    })
+    });
+    this.setState({ debts: debts });
   }
 
   calculate = () => {
@@ -166,7 +174,14 @@ class App extends Component {
     this.calculatePersonsDebts();
 
     this.createDebtsList();
+
+    this.nextButtonHandler();
     
+  }
+
+  newCalculation = () => {
+    this.setState(this.initialState);
+
   }
 
   render() {
@@ -205,6 +220,13 @@ class App extends Component {
               next={this.nextButtonHandler} 
               back={this.backButtonHandler}
               calculate={this.calculate} />
+          </Window>
+          <Window>
+            <Debts
+              debts={this.state.debts}
+              title={this.state.title}
+              back={this.backButtonHandler}
+              newCalc={this.newCalculation} />
           </Window>   
         </Layout>
       </Screen>

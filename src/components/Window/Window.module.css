@@ -55,3 +55,11 @@
     border: 1px solid currentColor;
     margin-top: 1rem;
 }
+
+.Window p:not(:last-of-type) {
+    margin-bottom: 1.5rem;
+}
+
+.Window p:last-of-type {
+    margin-bottom: 6rem;
+}
