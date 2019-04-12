@@ -22,7 +22,7 @@ class App extends Component {
         title: '',
         names: [],
         expenses: [
-          { id: 0, name: '', cost: '', participation: [], show: true, perPerson: 0 }
+          { id: 0, name: '', cost: '', participation: [], show: true, perPerson: 0, valid: false }
         ],
         readyToChange: true,
         debts: []
@@ -38,8 +38,22 @@ class App extends Component {
       case 2:
         return this.state.names.length > 0;
       case 3:
-        return true;
+        this.state.expenses.forEach((expense, index) => this.checkExpenseValid(index));
+        return this.state.expenses.reduce((prev, cur) => {
+          return cur.valid && prev;
+        }, this.state.expenses[0].valid);
     }
+  }
+
+  checkExpenseValid = (id) => {
+    let expenses = [...this.state.expenses];
+    const index = expenses.findIndex(expense => expense.id === id);
+    if (expenses[index].name !== '' && expenses[index].cost !== '' && expenses[index].participation.filter(el => el === '').length === 0 && expenses[index].participation.reduce((prev, cur) => Number(cur)+Number(prev)) === Number(expenses[index].cost)) {
+      expenses[index].valid = true;
+    } else {
+      expenses[index].valid = false;
+    }
+    this.setState({expenses: expenses});
   }
 
   nextButtonHandler = () => {
@@ -75,6 +89,11 @@ class App extends Component {
     if (this.state.expenses[0].participation.length === 0) {
       const participation = names.map(name => '');
       expenses[0].participation = participation;
+    } else {
+      let i = this.state.names.length - this.state.expenses[0].participation.length;
+      for(i; i> 0; i--) {
+        expenses.forEach(expense => expense.participation.push(''))
+      }
     }
     this.setState({ names: names });
   }
@@ -93,7 +112,7 @@ class App extends Component {
     const expenses = [...this.state.expenses];
     expenses.forEach(expense => expense.show = false);
     const newId = expenses[expenses.length-1].id + 1;
-    expenses.push({ id: newId, name: '', value: '', participation: participation, show: true });
+    expenses.push({ id: newId, name: '', value: '', participation: participation, show: true, perPerson: 0, valid: false });
     this.setState( { expenses: expenses });
   }
 

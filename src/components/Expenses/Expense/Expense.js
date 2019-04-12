@@ -10,7 +10,7 @@ const expense = (props) => {
                     <label>{name.name}</label>
                     <input 
                         type="number" 
-                        value={props.participation[name.index]} 
+                        value={props.participation[index]} 
                         onChange={(e) => props.updateParticipation(props.id, index, e)} />
                 </div>
             )
