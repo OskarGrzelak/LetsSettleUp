@@ -19,6 +19,8 @@
 
 .Sub {
     flex-wrap: wrap;
+    border: 2px solid transparent;
+    transition: all .3s;
 }
 
 .Expense .Main input,

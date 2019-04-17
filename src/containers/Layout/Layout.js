@@ -8,9 +8,9 @@ const layout = (props) => {
             
         <Motion style={{y: spring(props.position)}}> 
             { style => (
-                    <div className={classes.Container} style={{transform: `translateY(${style.y}vh)`}}>
-                        {props.children}
-                    </div>
+                <div className={classes.Container} style={{transform: `translateY(${style.y}vh)`}}>
+                    {props.children}
+                </div>
             ) }
         </Motion>
     )

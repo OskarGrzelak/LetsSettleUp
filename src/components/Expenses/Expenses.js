@@ -13,10 +13,13 @@ const expenses = (props) => {
             cost={expense.cost} 
             participation={expense.participation}
             show={expense.show}
+            partValid={expense.partExpValid}
+            valid={expense.valid}
             updateName={props.updateName} 
             updateCost={props.updateCost}
             updateParticipation={props.updateParticipation}
-            toggleExpense={props.toggleExpense} />
+            toggleExpense={props.toggleExpense}
+            readyToChange={props.readyToChange} />
     );
 
     return (

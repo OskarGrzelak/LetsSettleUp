@@ -17,15 +17,15 @@ class App extends Component {
   get initialState() {
     return {
       positionY: 0,
-        windows: ['start', 'title', 'names', 'expenses', 'debts'],
-        index: 0,
-        title: '',
-        names: [],
-        expenses: [
-          { id: 0, name: '', cost: '', participation: [], show: true, perPerson: 0, valid: false }
-        ],
-        readyToChange: true,
-        debts: []
+      windows: ['start', 'title', 'names', 'expenses', 'debts'],
+      index: 0,
+      title: '',
+      names: [],
+      expenses: [
+        { id: 0, name: '', cost: '', participation: [], show: true, perPerson: 0, partExpValid: false }
+      ],
+      readyToChange: true,
+      debts: []
       }
   }
 
@@ -38,22 +38,25 @@ class App extends Component {
       case 2:
         return this.state.names.length > 0;
       case 3:
-        this.state.expenses.forEach((expense, index) => this.checkExpenseValid(index));
         return this.state.expenses.reduce((prev, cur) => {
-          return cur.valid && prev;
-        }, this.state.expenses[0].valid);
+          return this.checkExpenseValid(cur) && prev;
+        }, this.checkExpenseValid(this.state.expenses[0]));
     }
   }
 
-  checkExpenseValid = (id) => {
-    let expenses = [...this.state.expenses];
-    const index = expenses.findIndex(expense => expense.id === id);
-    if (expenses[index].name !== '' && expenses[index].cost !== '' && expenses[index].participation.filter(el => el === '').length === 0 && expenses[index].participation.reduce((prev, cur) => Number(cur)+Number(prev)) === Number(expenses[index].cost)) {
-      expenses[index].valid = true;
+  checkExpenseValid = (expense) => {
+    if (expense.name !== '' && 
+        expense.cost !== '' && 
+        expense.participation.filter(el => el === '').length === 0 && 
+        expense.partExpValid) {
+      return true;
     } else {
-      expenses[index].valid = false;
+      return false;
     }
-    this.setState({expenses: expenses});
+  }
+
+  checkPartialExpenses = (expense) => {
+    return expense.participation.reduce((prev, cur) => Number(cur)+Number(prev)) === Number(expense.cost);
   }
 
   nextButtonHandler = () => {
@@ -62,6 +65,8 @@ class App extends Component {
     if (this.checkInput()) {
       this.setState({positionY: position, index: index, readyToChange: true})
     } else {
+      const expenses = [...this.state.expenses];
+      expenses.forEach(expense => expense.show = !expense.partExpValid);
       this.setState({readyToChange: false});
     };
   }
@@ -69,7 +74,7 @@ class App extends Component {
   backButtonHandler = () => {
     const position = this.state.positionY+100;
     const index = this.state.index - 1;
-    this.setState({positionY: position, index: index});
+    this.setState({positionY: position, index: index, readyToChange: true});
   }
 
   updateTitleHandler = (e) => {
@@ -112,7 +117,7 @@ class App extends Component {
     const expenses = [...this.state.expenses];
     expenses.forEach(expense => expense.show = false);
     const newId = expenses[expenses.length-1].id + 1;
-    expenses.push({ id: newId, name: '', value: '', participation: participation, show: true, perPerson: 0, valid: false });
+    expenses.push({ id: newId, name: '', cost: '', participation: participation, show: true, perPerson: 0, valid: false });
     this.setState( { expenses: expenses });
   }
 
@@ -144,6 +149,7 @@ class App extends Component {
     let expenses = [...this.state.expenses];
     const expenseIndex = expenses.findIndex(expense => expense.id === expenseId);
     expenses[expenseIndex].participation[personId] = value;
+    expenses[expenseIndex].partExpValid = this.checkPartialExpenses(expenses[expenseIndex]);
     this.setState({ expenses: expenses });
   }
 
@@ -166,7 +172,7 @@ class App extends Component {
 
   createDebtsList = () => {
     const obligors = this.state.names.filter(name => name.debt > 0);
-    const obligees = this.state.names.filter(name => name.debt < 0);
+    let obligees = this.state.names.filter(name => name.debt < 0);
     const debts = [];
     obligors.forEach(obligor => {
       let i = 0;
@@ -238,7 +244,8 @@ class App extends Component {
               nextExpense={this.addExpenseHandler}
               next={this.nextButtonHandler} 
               back={this.backButtonHandler}
-              calculate={this.calculate} />
+              calculate={this.calculate}
+              readyToChange={this.state.readyToChange} />
           </Window>
           <Window>
             <Debts
