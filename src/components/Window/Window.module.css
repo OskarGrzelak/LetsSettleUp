@@ -50,6 +50,11 @@
     margin-bottom: 1rem;
 }
 
+.Window h5 {
+    width: 80%;
+    margin: 2rem 0;
+}
+
 .Window .Name {
     padding: 1rem 2rem;
     border: 1px solid currentColor;

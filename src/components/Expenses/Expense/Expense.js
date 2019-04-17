@@ -32,6 +32,8 @@ const expense = (props) => {
         })
     }
 
+    let button = props.show ? <i className="far fa-caret-square-up" onClick={() => props.toggleExpense(props.id)}></i> : <i className="far fa-caret-square-down" onClick={() => props.toggleExpense(props.id)}></i>;
+
     return (
         <div className={classes.Expense}>
             <div className={classes.Main}>
@@ -49,7 +51,7 @@ const expense = (props) => {
                     value={props.cost || ''}
                     style={inputCostStyle}>
                 </input>
-                <span onClick={() => props.toggleExpense(props.id)}>&dArr;</span>
+                {button}
             </div>
             {props.show ? (
                 <div className={classes.Sub} style={style}>

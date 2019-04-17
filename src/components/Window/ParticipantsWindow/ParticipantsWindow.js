@@ -24,6 +24,7 @@ const participantsWindow = (props) => {
                 style={style} />
             <button onClick={props.next}>Next step</button>
             <button onClick={props.back}>Back</button>
+            {props.names.length > 0 ? <h5>If you want to delete a name, click adequate box below</h5> : null}
             {names}
         </Fragment>
     )

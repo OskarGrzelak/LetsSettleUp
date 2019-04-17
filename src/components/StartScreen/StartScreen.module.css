@@ -13,9 +13,9 @@
     color: #c5c5c5;
 }
 
-.StartScreen svg {
-    height: 10rem;
-    width: 10rem;
-    fill: #c5c5c5;
-    margin-top: 2rem;
+.StartScreen svg,
+.StartScreen i {
+    font-size: 8rem;
+    color: #c5c5c5;
+    margin-top: 6rem;
 }
