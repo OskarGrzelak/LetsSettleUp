@@ -128,6 +128,17 @@ class App extends Component {
     this.setState( {expenses: expenses});
   }
 
+  deleteExpenseHandler = (id) => {
+    let expenses = [...this.state.expenses];
+    const index = expenses.findIndex(expense => expense.id === id);
+    if (expenses.length > 1) {
+      expenses.splice(index, 1)
+    } else {
+      expenses[0] = { id: 0, name: '', cost: '', participation: [], show: true, perPerson: 0, partExpValid: false };
+    };
+    this.setState({expenses: expenses});
+  }
+
   updateNameHandler = (id, e) => {
     const name = e.target.value;
     let expenses = [...this.state.expenses];
@@ -241,6 +252,7 @@ class App extends Component {
               updateCost={this.updateCostHandler}
               updateParticipation={this.updateParticipation}
               toggleExpense={this.toggleExpenseHandler}
+              deleteExpense={this.deleteExpenseHandler}
               nextExpense={this.addExpenseHandler}
               next={this.nextButtonHandler} 
               back={this.backButtonHandler}

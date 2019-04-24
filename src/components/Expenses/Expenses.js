@@ -19,6 +19,7 @@ const expenses = (props) => {
             updateCost={props.updateCost}
             updateParticipation={props.updateParticipation}
             toggleExpense={props.toggleExpense}
+            deleteExpense={props.deleteExpense}
             readyToChange={props.readyToChange} />
     );
 

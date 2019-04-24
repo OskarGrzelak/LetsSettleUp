@@ -37,6 +37,7 @@ const expense = (props) => {
     return (
         <div className={classes.Expense}>
             <div className={classes.Main}>
+                <i className="far fa-trash-alt" onClick={() => props.deleteExpense(props.id)}></i>
                 <input 
                     type="text" 
                     placeholder="Expense's name" 

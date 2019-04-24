@@ -13,6 +13,7 @@ const expensesWindow = (props) => {
                 updateCost={props.updateCost} 
                 updateParticipation={props.updateParticipation}
                 toggleExpense={props.toggleExpense}
+                deleteExpense={props.deleteExpense}
                 readyToChange={props.readyToChange} />
             <button onClick={props.nextExpense}>Next expense</button>
             <button onClick={props.calculate}>Calculate</button>

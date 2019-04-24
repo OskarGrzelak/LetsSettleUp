@@ -54,6 +54,7 @@
 .Expense i {
     font-size: 2rem;
     color: #c5c5c5;
+    margin: 0 1rem;
 }
 
 @media (min-width: 500px) {
@@ -75,6 +76,5 @@
     
     .Expense i {
         font-size: 3rem;
-        color: #c5c5c5;
     }
 } 
