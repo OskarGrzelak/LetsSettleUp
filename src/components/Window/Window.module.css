@@ -1,5 +1,6 @@
 .Window {
     height: 100vh;
+    width: 100vw;
     background-color: #fff;
     overflow: auto;
     padding: 5rem 0;
@@ -53,6 +54,7 @@
 .Window h5 {
     width: 80%;
     margin: 2rem 0;
+    text-align: center;
 }
 
 .Window .Name {
@@ -68,3 +70,9 @@
 .Window p:last-of-type {
     margin-bottom: 6rem;
 }
+
+@media (min-width: 500px) {
+    .Window {
+        width: 500px;
+    }
+} 

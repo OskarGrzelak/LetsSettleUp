@@ -23,11 +23,16 @@
     transition: all .3s;
 }
 
+.Sub.Hidden {
+    display: none;
+}
+
 .Expense .Main input,
 .Expense .Sub input {
     margin-bottom: 0;
     padding: .2rem .5rem;
     font-size: 1.2rem;
+    color: inherit;
 }
 
 .Expense .Main input {
@@ -50,3 +55,26 @@
     font-size: 2rem;
     color: #c5c5c5;
 }
+
+@media (min-width: 500px) {
+    .Expense .Main input,
+    .Expense .Sub input {
+        margin-bottom: 0;
+        padding: .8rem 1.5rem;
+        font-size: inherit;
+    }
+
+    .Expense .Main input {
+        margin-bottom: 1.5rem;
+    }
+    
+    .Expense .Sub label {
+        font-size: 1.8rem;
+        display: block;
+    }
+    
+    .Expense i {
+        font-size: 3rem;
+        color: #c5c5c5;
+    }
+} 

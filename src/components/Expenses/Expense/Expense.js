@@ -57,7 +57,11 @@ const expense = (props) => {
                 <div className={classes.Sub} style={style}>
                     {expenseRow}
                 </div>
-            ) : null}
+            ) : (
+                <div className={[classes.Sub, classes.Hidden].join(' ')} style={style}>
+                    {expenseRow}
+                </div>
+            ) }
             
         </div>
     )
