@@ -4,7 +4,9 @@ import classes from '../Window.module.css';
 const participantsWindow = (props) => {
 
     let style = null;
-    if (!props.readyToChange) style = {border: '2px solid red'};
+    if (!props.readyToChange) {
+        if (props.names.length < 1) style = {border: '2px solid red'}
+    };
     
     let names = null;
     if (props.names) {
@@ -25,7 +27,9 @@ const participantsWindow = (props) => {
             <button onClick={props.next}>Next step</button>
             <button onClick={props.back}>Back</button>
             {props.names.length > 0 ? <h5>If you want to delete a name, click adequate box below</h5> : null}
-            {names}
+            <div className={classes.Names}>
+                {names}
+            </div>
         </Fragment>
     )
 }

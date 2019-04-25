@@ -3,7 +3,9 @@ import React, { Fragment } from 'react';
 const titleWindow = (props) => {
 
     let style = null;
-    if (!props.readyToChange) style = {border: '2px solid red'};
+    if (!props.readyToChange) {
+        if (props.title === '') style = {border: '2px solid red'}
+    };
 
     return (
         <Fragment>

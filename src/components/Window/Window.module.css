@@ -57,10 +57,20 @@
     text-align: center;
 }
 
-.Window .Name {
+.Window .Names {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.Window .Names .Name {
     padding: 1rem 2rem;
     border: 1px solid currentColor;
     margin-top: 1rem;
+}
+
+.Window .Names .Name:not(:last-of-type) {
+    margin-right: 1rem;
 }
 
 .Window p:not(:last-of-type) {

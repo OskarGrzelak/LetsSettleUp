@@ -41,6 +41,8 @@ class App extends Component {
         return this.state.expenses.reduce((prev, cur) => {
           return this.checkExpenseValid(cur) && prev;
         }, this.checkExpenseValid(this.state.expenses[0]));
+      default:
+        return true;
     }
   }
 
@@ -66,7 +68,7 @@ class App extends Component {
       this.setState({positionY: position, index: index, readyToChange: true})
     } else {
       const expenses = [...this.state.expenses];
-      expenses.forEach(expense => expense.show = !expense.partExpValid);
+      expenses.forEach(expense => expense.show = !(expense.partExpValid && expense.participation.filter(el => el === '').length === 0));
       this.setState({readyToChange: false});
     };
   }
@@ -108,7 +110,10 @@ class App extends Component {
     const index = names.findIndex(name => name.id === id);
     names.splice(index, 1);
     const expenses = [...this.state.expenses];
-    expenses.forEach(expense => expense.participation.splice(index, 1));
+    expenses.forEach(expense => {
+      expense.participation.splice(index, 1);
+      expense.partExpValid = this.checkPartialExpenses(expense);
+    });
     this.setState({ names: names, expenses: expenses });
   }
 
@@ -182,20 +187,22 @@ class App extends Component {
   }
 
   createDebtsList = () => {
-    const obligors = this.state.names.filter(name => name.debt > 0);
-    let obligees = this.state.names.filter(name => name.debt < 0);
+    const obligors = this.state.names.filter(name => name.debt.toFixed(2) > 0);
+    let obligees = this.state.names.filter(name => name.debt.toFixed(2) < 0);
     const debts = [];
     obligors.forEach(obligor => {
       let i = 0;
       while (obligor.debt > 0 && i < obligees.length) {
-        if (obligor.debt <= -obligees[i].debt) {
-          debts.push({obligorName: obligor.name, obligeeName: obligees[i].name, debt: obligor.debt});
-          obligees[i].debt = obligees[i].debt + obligor.debt;
-          obligor.debt = 0;
-        } else {
-          debts.push({obligorName: obligor.name, obligeeName: obligees[i].name, debt: -obligees[i].debt});
-          obligor.debt = obligor.debt + obligees[i].debt;
-          obligees[i].debt = 0;
+        if (obligees[i].debt < 0) {
+          if (obligor.debt <= -obligees[i].debt) {
+            debts.push({obligorName: obligor.name, obligeeName: obligees[i].name, debt: obligor.debt});
+            obligees[i].debt = obligees[i].debt + obligor.debt;
+            obligor.debt = 0;
+          } else {
+            debts.push({obligorName: obligor.name, obligeeName: obligees[i].name, debt: -obligees[i].debt});
+            obligor.debt = obligor.debt + obligees[i].debt;
+            obligees[i].debt = 0;
+          }
         }
         i++;
       }
